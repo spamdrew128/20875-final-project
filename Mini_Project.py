@@ -1,6 +1,23 @@
 import pandas
 import numpy as np
 
+def avgFinder(start_day, data):
+    day_vals = [[]]*7
+    #day_vals = np.array(day_vals)
+
+    for i in range(len(data)):
+        day = (i + start_day) % 7
+        day_vals[day].append(data[i])
+    
+    avgs = [np.mean(day) for day in day_vals]
+    return avgs
+
+def mseFinder(data1, data2):
+    assert(len(data1) == len(data2))
+    errors = [(data1[i] - data2[i])**2 for i in range(len(data1))]
+
+    return np.mean(errors)
+
 #section used to read and parse the file; sorts individual columns for easier manipulation later
 bike_data_total = pandas.read_csv('NYC_Bicycle_Counts_2016_Corrected.csv')
 
@@ -22,7 +39,5 @@ allBridgeData = [Brooklyn, Manhattan, Williamsburg, Queensboro]
 #converts bridge data into integers
 allBridgeTravelers = [[int(travelers.replace(',', '')) for travelers in bridge] for bridge in allBridgeData]
 
-print(new[0][0])
 
 
-#def trendFinder():
