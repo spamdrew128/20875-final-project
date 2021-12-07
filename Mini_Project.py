@@ -26,6 +26,9 @@ def mseFinder(data1, data2):
 #section used to read and parse the file; sorts individual columns for easier manipulation later
 bike_data_total = pandas.read_csv('NYC_Bicycle_Counts_2016_Corrected.csv')
 
+columnNames = bike_data_total.columns
+bridgeNames = columnNames[5:9]
+
 day_of_week = bike_data_total.iloc[:, 1].values
 
 #weather data
@@ -55,5 +58,6 @@ for i in range(len(allBridgeTravelers)):
 
     MSEs.append(mseFinder(avgFinder(4, TotalTravelers),  avgFinder(4, cross_val)))
 
-print(MSEs)
-print(MSEs.index(min(MSEs)))
+
+name_index = MSEs.index(min(MSEs))
+print("The {} bridge should not have sensors installed.".format(bridgeNames[name_index]))
