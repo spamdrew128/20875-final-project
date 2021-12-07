@@ -2,14 +2,18 @@ import pandas
 import numpy as np
 
 def avgFinder(start_day, data):
-    day_vals = [[]]*7
-    #day_vals = np.array(day_vals)
+    day_vals = [0]*7
+    day_counts = [0]*7
 
     for i in range(len(data)):
         day = (i + start_day) % 7
-        day_vals[day].append(data[i])
+        day_vals[day] += data[i]
+        day_counts[day] += 1
     
-    avgs = [np.mean(day) for day in day_vals]
+    avgs = [0]*7
+    for i in range(7):
+        avgs[i] = day_vals[i] / day_counts[i]        
+    
     return avgs
 
 def mseFinder(data1, data2):
