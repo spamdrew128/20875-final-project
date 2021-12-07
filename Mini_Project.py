@@ -25,8 +25,13 @@ for bridge in allBridgeData:
     for travelers in bridge:
         tempVals.append(int(travelers.replace(',', '')))
 
+new = [[int(travelers.replace(',', '')) for travelers in bridge] for bridge in allBridgeData]
 
 
-print(type(Brooklyn[0]))
+#print(type(Brooklyn[0]))
+#print(Brooklyn[0])
+
+print(new[0][0])
+
 
 #def trendFinder():
