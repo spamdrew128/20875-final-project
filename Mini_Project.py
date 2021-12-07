@@ -1,5 +1,6 @@
 import pandas
 import numpy as np
+from functools import reduce
 
 def avgFinder(start_day, data):
     day_vals = [0]*7
@@ -42,6 +43,17 @@ allBridgeData = [Brooklyn, Manhattan, Williamsburg, Queensboro]
 
 #converts bridge data into integers
 allBridgeTravelers = [[int(travelers.replace(',', '')) for travelers in bridge] for bridge in allBridgeData]
+TotalTravelers = [int(travelers.replace(',', '')) for travelers in TotalTravelers]
 
+#PROBLEM 1
+MSEs = []
 
+for i in range(len(allBridgeTravelers)):
+    travers_copy = allBridgeTravelers.copy()
+    travers_copy.remove(travers_copy[i])
+    cross_val = reduce(lambda x, y:	np.array(x) + np.array(y), travers_copy)
 
+    MSEs.append(mseFinder(avgFinder(4, TotalTravelers),  avgFinder(4, cross_val)))
+
+print(MSEs)
+print(MSEs.index(min(MSEs)))
