@@ -20,16 +20,7 @@ TotalTravelers = np.array(pandas.array(bike_data_total.iloc[:, 9].values))
 allBridgeData = [Brooklyn, Manhattan, Williamsburg, Queensboro]
 
 #converts bridge data into integers
-for bridge in allBridgeData:
-    tempVals = []
-    for travelers in bridge:
-        tempVals.append(int(travelers.replace(',', '')))
-
-new = [[int(travelers.replace(',', '')) for travelers in bridge] for bridge in allBridgeData]
-
-
-#print(type(Brooklyn[0]))
-#print(Brooklyn[0])
+allBridgeTravelers = [[int(travelers.replace(',', '')) for travelers in bridge] for bridge in allBridgeData]
 
 print(new[0][0])
 
