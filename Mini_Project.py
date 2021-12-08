@@ -1,3 +1,4 @@
+from array import typecodes
 import pandas
 import numpy as np
 import re
@@ -48,7 +49,7 @@ def precipSorter(data):
             values = traces.sub(values, "0.001")
         cleanedData.append(float(values))
 
-    return cleanedData, indices
+    return np.array(cleanedData), indices
 
 
 #section used to read and parse the file; sorts individual columns for easier manipulation later
@@ -95,9 +96,19 @@ name_index = MSEs.index(min(MSEs))
 
 #PROBLEM 2
 Precip, Indices = precipSorter(Precip)
-print(type(Precip))
+#print(type(Precip))
+
+#removing snow values
+for i in Indices:
+    highTempF = np.delete(highTempF, i)
+    lowTempF = np.delete(lowTempF, i)
+    Precip = np.delete(Precip, i)
+    TotalTravelers = np.delete(TotalTravelers, i)
+
 X = np.array([highTempF, lowTempF, Precip, np.ones(len(highTempF))])
 X = X.T
-hhh
+X = np.array([[float(val) for val in row] for row in X])
 
-print(X)
+coeffs = leastSquares(X, TotalTravelers)
+
+print(coeffs)
