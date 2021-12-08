@@ -38,15 +38,16 @@ def precipSorter(data):
     snow = re.compile("\d+\.\d+\s\(S\)")
     traces = re.compile("T")
     cleanedData = []
+    indices = []
 
     for values in data:
         if snow.search(values):
-            #some process
+            indices.append(data.index(values))
         elif traces.search(values):
             values = traces.sub(values, "0.001")
         cleanedData.append(int(values.replace(",","")))
 
-    return cleanedData
+    return cleanedData, indices
 
 
 #section used to read and parse the file; sorts individual columns for easier manipulation later
