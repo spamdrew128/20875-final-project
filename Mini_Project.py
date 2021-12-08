@@ -60,7 +60,7 @@ def traveler_yhat(coeffs, features):
 
 #functions for part 3
 def precip_to_binary(Precip, boundary=0.1):
-    binary = [0 if val < boundary else 1 for val in Precip]
+    binary = [0 if val <= boundary else 1 for val in Precip]
 
     return np.array(binary)
 
@@ -134,10 +134,12 @@ r2 = r2_score(y_true, y_hat)
 logreg = LogisticRegression()
 x_train = y_true.reshape(-1, 1)
 y_train = precip_to_binary(Precip)
+
 logreg.fit(x_train, y_train)
 y_pred = logreg.predict(x_train)
 
 acc = metrics.accuracy_score(y_train, y_pred)
 print(acc)
 #print(logreg.get_params())
-print(logreg.predict_proba(np.array(10000).reshape(-1, 1)))
+prob_of_rain = logreg.predict_proba(np.array(11000).reshape(-1, 1))[0][1]
+print(prob_of_rain)
