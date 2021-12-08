@@ -4,6 +4,7 @@ import re
 from functools import reduce
 from sklearn.metrics import r2_score
 from sklearn.linear_model import LogisticRegression
+from sklearn import metrics
 
 #functions for part 1
 def avgFinder(start_day, data):
@@ -58,7 +59,10 @@ def traveler_yhat(coeffs, features):
     return y_hat
 
 #functions for part 3
+def precip_to_binary(Precip, boundary=0.1):
+    binary = [0 if val < boundary else 1 for val in Precip]
 
+    return np.array(binary)
 
 #section used to read and parse the file; sorts individual columns for easier manipulation later
 bike_data_total = pandas.read_csv('NYC_Bicycle_Counts_2016_Corrected.csv')
@@ -117,11 +121,23 @@ X = np.array([highTempF, lowTempF, Precip, np.ones(len(highTempF))])
 X = X.T
 X = np.array([[float(val) for val in row] for row in X])
 
-print(X[0])
+#print(X[0])
 
 coeffs = leastSquares(X, y_true)
 y_hat = [traveler_yhat(coeffs, [highTempF[i], lowTempF[i], Precip[i]]) for i in range(len(highTempF))]
 
 r2 = r2_score(y_true, y_hat)
-print(coeffs)
-print(r2)
+#print(coeffs)
+#print(r2)
+
+#PROBLEM 3
+logreg = LogisticRegression()
+x_train = y_true.reshape(-1, 1)
+y_train = precip_to_binary(Precip)
+logreg.fit(x_train, y_train)
+y_pred = logreg.predict(x_train)
+
+acc = metrics.accuracy_score(y_train, y_pred)
+print(acc)
+#print(logreg.get_params())
+print(logreg.predict_proba(np.array(10000).reshape(-1, 1)))
