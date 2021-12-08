@@ -1,9 +1,9 @@
-from array import typecodes
 import pandas
 import numpy as np
 import re
-from functools import reduce, total_ordering
+from functools import reduce
 from sklearn.metrics import r2_score
+from sklearn.linear_model import LogisticRegression
 
 #functions for part 1
 def avgFinder(start_day, data):
@@ -56,6 +56,9 @@ def traveler_yhat(coeffs, features):
     y_hat = features[0]*coeffs[0] + features[1]*coeffs[1] + features[2]*coeffs[2] + coeffs[3]
 
     return y_hat
+
+#functions for part 3
+
 
 #section used to read and parse the file; sorts individual columns for easier manipulation later
 bike_data_total = pandas.read_csv('NYC_Bicycle_Counts_2016_Corrected.csv')
@@ -122,5 +125,3 @@ y_hat = [traveler_yhat(coeffs, [highTempF[i], lowTempF[i], Precip[i]]) for i in 
 r2 = r2_score(y_true, y_hat)
 print(coeffs)
 print(r2)
-
-
