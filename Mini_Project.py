@@ -2,7 +2,8 @@ from array import typecodes
 import pandas
 import numpy as np
 import re
-from functools import reduce
+from functools import reduce, total_ordering
+from sklearn.metrics import r2_score
 
 #functions for part 1
 def avgFinder(start_day, data):
@@ -51,6 +52,10 @@ def precipSorter(data):
 
     return np.array(cleanedData), indices
 
+def traveler_yhat(coeffs, features):
+    y_hat = features[0]*coeffs[0] + features[1]*coeffs[1] + features[2]*coeffs[2] + coeffs[3]
+
+    return y_hat
 
 #section used to read and parse the file; sorts individual columns for easier manipulation later
 bike_data_total = pandas.read_csv('NYC_Bicycle_Counts_2016_Corrected.csv')
@@ -103,12 +108,16 @@ for i in Indices:
     highTempF = np.delete(highTempF, i)
     lowTempF = np.delete(lowTempF, i)
     Precip = np.delete(Precip, i)
-    TotalTravelers = np.delete(TotalTravelers, i)
+    y_true = np.delete(TotalTravelers, i)
 
 X = np.array([highTempF, lowTempF, Precip, np.ones(len(highTempF))])
 X = X.T
 X = np.array([[float(val) for val in row] for row in X])
 
-coeffs = leastSquares(X, TotalTravelers)
+coeffs = leastSquares(X, y_true)
+y_hat = [traveler_yhat(coeffs, [highTempF[i], lowTempF[i], Precip[i]]) for i in range(len(highTempF))]
 
+r2 = r2_score(y_true, y_hat)
 print(coeffs)
+print(r2)
+
