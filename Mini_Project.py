@@ -33,6 +33,7 @@ def leastSquares(X, y):
     
     return B
 
+
 #section used to read and parse the file; sorts individual columns for easier manipulation later
 bike_data_total = pandas.read_csv('NYC_Bicycle_Counts_2016_Corrected.csv')
 
@@ -42,9 +43,9 @@ bridgeNames = columnNames[5:9]
 day_of_week = bike_data_total.iloc[:, 1].values
 
 #weather data
-highTempF = np.array(bike_data_total.iloc[:, 2].values)
-lowTempF = np.array(bike_data_total.iloc[:, 3].values)
-Precip = np.array(bike_data_total.iloc[:, 4].values)
+highTempF = np.array(pandas.array(bike_data_total.iloc[:, 2].values))
+lowTempF = np.array(pandas.array(bike_data_total.iloc[:, 3].values))
+Precip = np.array(pandas.array(bike_data_total.iloc[:, 4].values))
 
 #Bridge data
 Brooklyn = np.array(pandas.array(bike_data_total.iloc[:, 5].values))
@@ -54,9 +55,12 @@ Queensboro = np.array(pandas.array(bike_data_total.iloc[:, 8].values))
 TotalTravelers = np.array(pandas.array(bike_data_total.iloc[:, 9].values))
 allBridgeData = [Brooklyn, Manhattan, Williamsburg, Queensboro]
 
-#converts bridge data into integers
+#converts purely numeric data into integers
 allBridgeTravelers = [[int(travelers.replace(',', '')) for travelers in bridge] for bridge in allBridgeData]
 TotalTravelers = [int(travelers.replace(',', '')) for travelers in TotalTravelers]
+highTempF = [int(temp.replace(',', '')) for temp in highTempF]
+lowTempF = [int(temp.replace(',', '')) for temp in lowTempF]
+
 
 #PROBLEM 1
 MSEs = []
