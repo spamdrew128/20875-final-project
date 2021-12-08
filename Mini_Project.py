@@ -43,10 +43,10 @@ def precipSorter(data):
     for values in data:
         if snow.search(values):
             indices.append(list(data).index(values))
-            
+            values = snow.sub(values, "0")
         elif traces.search(values):
             values = traces.sub(values, "0.001")
-        cleanedData.append(float(values.replace(",","")))
+        cleanedData.append(float(values))
 
     return cleanedData, indices
 
