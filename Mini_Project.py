@@ -98,6 +98,6 @@ Precip, Indices = precipSorter(Precip)
 print(type(Precip))
 X = np.array([highTempF, lowTempF, Precip, np.ones(len(highTempF))])
 X = X.T
-
+hhh
 
 print(X)
