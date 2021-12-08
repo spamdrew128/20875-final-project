@@ -142,4 +142,3 @@ acc = metrics.accuracy_score(y_train, y_pred)
 print(acc)
 #print(logreg.get_params())
 prob_of_rain = logreg.predict_proba(np.array(11000).reshape(-1, 1))[0][1]
-print(prob_of_rain)
