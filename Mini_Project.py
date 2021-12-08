@@ -42,10 +42,11 @@ def precipSorter(data):
 
     for values in data:
         if snow.search(values):
-            indices.append(data.index(values))
+            indices.append(list(data).index(values))
+            
         elif traces.search(values):
             values = traces.sub(values, "0.001")
-        cleanedData.append(int(values.replace(",","")))
+        cleanedData.append(float(values.replace(",","")))
 
     return cleanedData, indices
 
@@ -71,11 +72,11 @@ Queensboro = np.array(pandas.array(bike_data_total.iloc[:, 8].values))
 TotalTravelers = np.array(pandas.array(bike_data_total.iloc[:, 9].values))
 allBridgeData = [Brooklyn, Manhattan, Williamsburg, Queensboro]
 
-#converts purely numeric data into integers
-allBridgeTravelers = [[int(travelers.replace(',', '')) for travelers in bridge] for bridge in allBridgeData]
-TotalTravelers = [int(travelers.replace(',', '')) for travelers in TotalTravelers]
-highTempF = [int(temp.replace(',', '')) for temp in highTempF]
-lowTempF = [int(temp.replace(',', '')) for temp in lowTempF]
+#converts purely numeric data into floats
+allBridgeTravelers = [[float(travelers.replace(',', '')) for travelers in bridge] for bridge in allBridgeData]
+TotalTravelers = [float(travelers.replace(',', '')) for travelers in TotalTravelers]
+#highTempF = [float(temp.replace(',', '')) for temp in highTempF]
+#lowTempF = [float(temp.replace(',', '')) for temp in lowTempF]
 
 
 #PROBLEM 1
@@ -98,4 +99,4 @@ X = np.array([highTempF, lowTempF, Precip, np.ones(len(highTempF))])
 X = X.T
 
 
-print(X)
+#print(X)
