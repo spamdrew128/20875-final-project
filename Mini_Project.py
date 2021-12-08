@@ -114,10 +114,13 @@ X = np.array([highTempF, lowTempF, Precip, np.ones(len(highTempF))])
 X = X.T
 X = np.array([[float(val) for val in row] for row in X])
 
+print(X[0])
+
 coeffs = leastSquares(X, y_true)
 y_hat = [traveler_yhat(coeffs, [highTempF[i], lowTempF[i], Precip[i]]) for i in range(len(highTempF))]
 
 r2 = r2_score(y_true, y_hat)
 print(coeffs)
 print(r2)
+
 
