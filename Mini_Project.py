@@ -2,6 +2,7 @@ import pandas
 import numpy as np
 from functools import reduce
 
+#functions for part 1
 def avgFinder(start_day, data):
     day_vals = [0]*7
     day_counts = [0]*7
@@ -22,6 +23,15 @@ def mseFinder(data1, data2):
     errors = [(data1[i] - data2[i])**2 for i in range(len(data1))]
 
     return np.mean(errors)
+
+#functions for part 2
+def leastSquares(X, y):
+    X = np.array(X)
+    y = np.array(y)
+
+    B = np.linalg.inv(X.T @ X) @ X.T @ y
+    
+    return B
 
 #section used to read and parse the file; sorts individual columns for easier manipulation later
 bike_data_total = pandas.read_csv('NYC_Bicycle_Counts_2016_Corrected.csv')
@@ -60,4 +70,9 @@ for i in range(len(allBridgeTravelers)):
 
 
 name_index = MSEs.index(min(MSEs))
-print("The {} bridge should not have sensors installed.".format(bridgeNames[name_index]))
+#print("The {} bridge should not have sensors installed.".format(bridgeNames[name_index]))
+
+#PROBLEM 2
+X = np.array([highTempF, lowTempF, Precip, np.ones(len(highTempF))])
+X = X.T
+print(X)
