@@ -1,5 +1,6 @@
 import pandas
 import numpy as np
+import re
 from functools import reduce
 
 #functions for part 1
@@ -32,6 +33,20 @@ def leastSquares(X, y):
     B = np.linalg.inv(X.T @ X) @ X.T @ y
     
     return B
+
+def precipSorter(data):
+    snow = re.compile("\d+\.\d+\s\(S\)")
+    traces = re.compile("T")
+    cleanedData = []
+
+    for values in data:
+        if snow.search(values):
+            #some process
+        elif traces.search(values):
+            values = traces.sub(values, "0.001")
+        cleanedData.append(int(values.replace(",","")))
+
+    return cleanedData
 
 
 #section used to read and parse the file; sorts individual columns for easier manipulation later
