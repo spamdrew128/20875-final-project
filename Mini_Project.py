@@ -43,10 +43,10 @@ def precipSorter(data):
     for values in data:
         if snow.search(values):
             indices.append(list(data).index(values))
-            
+            values = snow.sub(values, "0")
         elif traces.search(values):
             values = traces.sub(values, "0.001")
-        cleanedData.append(float(values.replace(",","")))
+        cleanedData.append(float(values))
 
     return cleanedData, indices
 
@@ -94,9 +94,10 @@ name_index = MSEs.index(min(MSEs))
 #print("The {} bridge should not have sensors installed.".format(bridgeNames[name_index]))
 
 #PROBLEM 2
-Precip = precipSorter(Precip)
+Precip, Indices = precipSorter(Precip)
+print(type(Precip))
 X = np.array([highTempF, lowTempF, Precip, np.ones(len(highTempF))])
 X = X.T
 
 
-#print(X)
+print(X)
