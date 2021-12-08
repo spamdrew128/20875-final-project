@@ -92,6 +92,9 @@ name_index = MSEs.index(min(MSEs))
 #print("The {} bridge should not have sensors installed.".format(bridgeNames[name_index]))
 
 #PROBLEM 2
+Precip = precipSorter(Precip)
 X = np.array([highTempF, lowTempF, Precip, np.ones(len(highTempF))])
 X = X.T
+
+
 print(X)
